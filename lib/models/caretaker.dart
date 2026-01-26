@@ -3,14 +3,12 @@ class Caretaker {
   final int? age;
   final String? gender;
   final String? contact_number;
-  final String? doctor_id;
 
   Caretaker({
     required this.caretaker_id,
     this.age,
     this.gender,
     this.contact_number,
-    this.doctor_id,
   });
 
   factory Caretaker.fromJson(Map<String, dynamic> json) {
@@ -19,7 +17,6 @@ class Caretaker {
       age: json['age'],
       gender: json['gender'],
       contact_number: json['contact_number'],
-      doctor_id: json['doctor_id'],
     );
   }
 
@@ -28,6 +25,5 @@ class Caretaker {
     'age': age,
     'gender': gender,
     'contact_number': contact_number,
-    'doctor_id': doctor_id,
   };
 }
