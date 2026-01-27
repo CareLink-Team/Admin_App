@@ -10,7 +10,7 @@ class SupabaseService {
   SupabaseService._internal();
 
   /// Gets the global Supabase client instance
-  SupabaseClient get client => Supabase.instance.client;
+  static SupabaseClient get client => Supabase.instance.client;
 
   /// Initializes Supabase with the given [url] and [anonKey].
   /// This must be called before accessing any other Supabase functionality.
@@ -23,7 +23,6 @@ class SupabaseService {
   }
 
   /// Returns the current authenticated user, or null if not signed in.
-  User? get currentUser => client.auth.currentUser;
 
   /// Signs in a user with email and password.
   Future<AuthResponse> signInWithEmailPassword({
@@ -35,6 +34,9 @@ class SupabaseService {
       password: password,
     );
   }
+
+  static User? get currentUser => client.auth.currentUser;
+  static bool get isLoggedIn => currentUser != null;
 
   /// Signs out the current user.
   Future<void> signOut() async {

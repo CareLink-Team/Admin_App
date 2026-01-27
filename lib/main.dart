@@ -1,5 +1,8 @@
+import 'package:admin_app/core/routing/app_router.dart';
+import 'package:admin_app/core/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'services/supabase_service.dart';
+import 'core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,9 +15,13 @@ class CareLinkAdminApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: Text('CareLink Admin Booted'))),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.light,
+      initialRoute: Routes.dashboard,
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }
