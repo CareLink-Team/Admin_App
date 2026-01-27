@@ -15,13 +15,11 @@ class SupabaseService {
   /// Initializes Supabase with the given [url] and [anonKey].
   /// This must be called before accessing any other Supabase functionality.
   static Future<void> initialize({
-    required String url='https://coxlqecyrfvmiqeomyqq.supabase.co', 
-    required String anonKey ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNveGxxZWN5cmZ2bWlxZW9teXFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDU2NTksImV4cCI6MjA4MDU4MTY1OX0.IRt22sRgFdJZiq2ZVaZJoSUSn8bY4tvcU2TnNfGDdW4',
+    String url = 'https://coxlqecyrfvmiqeomyqq.supabase.co',
+    String anonKey =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNveGxxZWN5cmZ2bWlxZW9teXFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDU2NTksImV4cCI6MjA4MDU4MTY1OX0.IRt22sRgFdJZiq2ZVaZJoSUSn8bY4tvcU2TnNfGDdW4',
   }) async {
-    await Supabase.initialize(
-      url: url,
-      anonKey: anonKey,
-    );
+    await Supabase.initialize(url: url, anonKey: anonKey);
   }
 
   /// Returns the current authenticated user, or null if not signed in.
