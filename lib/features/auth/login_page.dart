@@ -28,69 +28,104 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
 
     return AuthLayout(
-      logo: Image.asset('lib/assets/logos/carelink_logo.png', height: 80),
-
-      title: 'Admin Login',
-
+      // Pointing to your existing asset path
+      logo: Image.asset('lib/assets/logos/carelink_logo.png', height: 100),
+      title: 'CareLink',
       form: Form(
         key: _formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Text(
+              "Sign in to your account",
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Email Field
             TextFormField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                hintText: 'Email',
+                hintText: 'Email Address', // Changed from labelText to hintText
+                prefixIcon: const Icon(Icons.email_outlined, size: 22),
                 filled: true,
-                fillColor: theme.colorScheme.surface,
+                fillColor: theme.colorScheme.primary.withOpacity(0.05),
+                // This padding ensures the cursor and text are perfectly centered
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 20,
+                ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide.none,
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary.withOpacity(0.2),
+                    width: 1,
+                  ),
+                ),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Email is required';
-                }
-                return null;
-              },
+              validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
+            // Password Field
             TextFormField(
               controller: _passwordController,
               obscureText: true,
-              textInputAction: TextInputAction.done,
               decoration: InputDecoration(
-                hintText: 'Password',
+                hintText: 'Password', // Changed from labelText to hintText
+                prefixIcon: const Icon(Icons.lock_person_outlined, size: 22),
                 filled: true,
-                fillColor: theme.colorScheme.surface,
+                fillColor: theme.colorScheme.primary.withOpacity(0.05),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 20,
+                ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide.none,
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary.withOpacity(0.2),
+                    width: 1,
+                  ),
+                ),
               ),
-              validator: (value) {
-                if (value == null || value.length < 6) {
-                  return 'Password must be at least 6 characters';
-                }
-                return null;
-              },
+              validator: (v) =>
+                  (v == null || v.length < 6) ? 'Min 6 chars' : null,
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
 
             Consumer<LoginController>(
               builder: (_, controller, __) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (controller.error != null)
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.only(bottom: 16),
                         child: Text(
                           controller.error!,
+                          textAlign: TextAlign.center,
                           style: TextStyle(color: theme.colorScheme.error),
                         ),
                       ),
@@ -100,12 +135,10 @@ class _LoginPageState extends State<LoginPage> {
                           ? null
                           : () async {
                               if (!_formKey.currentState!.validate()) return;
-
                               final success = await controller.login(
                                 email: _emailController.text.trim(),
                                 password: _passwordController.text,
                               );
-
                               if (success && context.mounted) {
                                 Navigator.pushReplacementNamed(
                                   context,
@@ -113,13 +146,31 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               }
                             },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        backgroundColor: const Color(0xFF2C4B99),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        elevation: 0,
+                      ),
                       child: controller.isLoading
                           ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
                             )
-                          : const Text('Sign in'),
+                          : const Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
                     ),
                   ],
                 );
@@ -128,10 +179,18 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-
-      footer: TextButton(
-        onPressed: () {},
-        child: const Text('Forgot password?'),
+      footer: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Issues logging in?"),
+          TextButton(
+            onPressed: () {},
+            child: const Text(
+              'Contact Tech Support',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }

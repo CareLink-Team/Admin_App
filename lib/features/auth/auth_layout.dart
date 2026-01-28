@@ -19,33 +19,66 @@ class AuthLayout extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
+      // Soft gradient background for a professional look
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              theme.colorScheme.primaryContainer.withOpacity(0.4),
+              theme.colorScheme.surface,
+            ],
+          ),
+        ),
+        child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
-            child: Column(
-              children: [
-                const SizedBox(height: 48),
-
-                logo,
-
-                const SizedBox(height: 48),
-
-                Text(
-                  title,
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: Card(
+                elevation: 8,
+                shadowColor: Colors.black12,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                color: theme
+                    .colorScheme
+                    .surface, // Adjust to a light blue if desired
+                child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      logo,
+                      const SizedBox(height: 16),
+                      Text(
+                        title,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w900,
+                          color: const Color(0xFF2C4B99), // CareLink Blue
+                          letterSpacing: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "ADMIN PANEL",
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: const Color(0xFFE24065), // CareLink Pink/Red
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 4,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      form,
+                      if (footer != null) ...[
+                        const SizedBox(height: 24),
+                        footer!,
+                      ],
+                    ],
                   ),
                 ),
-
-                const SizedBox(height: 32),
-
-                form,
-
-                if (footer != null) ...[const SizedBox(height: 24), footer!],
-              ],
+              ),
             ),
           ),
         ),
