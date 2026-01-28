@@ -1,4 +1,5 @@
 class Routes {
+  static const String splash = '/';
   static const login = '/login';
 
   static const dashboard = '/dashboard';

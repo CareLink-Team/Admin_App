@@ -20,7 +20,7 @@ class CareLinkAdminApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.light,
-      initialRoute: Routes.dashboard,
+      initialRoute: Routes.login,
       onGenerateRoute: AppRouter.generateRoute,
     );
   }

@@ -2,18 +2,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService {
   static final SupabaseService _instance = SupabaseService._internal();
-
-  factory SupabaseService() {
-    return _instance;
-  }
-
+  factory SupabaseService() => _instance;
   SupabaseService._internal();
 
-  /// Gets the global Supabase client instance
-  static SupabaseClient get client => Supabase.instance.client;
+  SupabaseClient get client => Supabase.instance.client;
 
-  /// Initializes Supabase with the given [url] and [anonKey].
-  /// This must be called before accessing any other Supabase functionality.
   static Future<void> initialize({
     String url = 'https://coxlqecyrfvmiqeomyqq.supabase.co',
     String anonKey =
@@ -22,23 +15,26 @@ class SupabaseService {
     await Supabase.initialize(url: url, anonKey: anonKey);
   }
 
-  /// Returns the current authenticated user, or null if not signed in.
+  Future<String?> getUserRole(String userId) async {
+    final response = await client
+        .from('profiles')
+        .select('role')
+        .eq('id', userId)
+        .single();
 
-  /// Signs in a user with email and password.
+    return response['role'] as String?;
+  }
+
+  User? get currentUser => client.auth.currentUser;
+  bool get isLoggedIn => currentUser != null;
+
   Future<AuthResponse> signInWithEmailPassword({
     required String email,
     required String password,
-  }) async {
-    return await client.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
+  }) {
+    return client.auth.signInWithPassword(email: email, password: password);
   }
 
-  static User? get currentUser => client.auth.currentUser;
-  static bool get isLoggedIn => currentUser != null;
-
-  /// Signs out the current user.
   Future<void> signOut() async {
     await client.auth.signOut();
   }
