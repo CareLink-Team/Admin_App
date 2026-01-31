@@ -6,4 +6,5 @@ class Routes {
   static const doctors = '/doctors';
   static const patients = '/patients';
   static const caretakers = '/caretakers';
+  static const medicines = '/medicines';
 }

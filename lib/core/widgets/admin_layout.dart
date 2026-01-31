@@ -13,20 +13,35 @@ class AdminLayout extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
+          // Fixed Navigation Sidebar
           const Sidebar(),
 
+          // Main Content Area
           Expanded(
-            child: Column(
-              children: [
-                TopBar(title: title),
+            child: Container(
+              color: const Color(
+                0xFFF8FAFC,
+              ), // Subtle off-white background to make cards pop
+              child: Column(
+                children: [
+                  TopBar(title: title),
 
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(24),
-                    child: child,
+                  // Content
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(32),
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxWidth: 1400,
+                          ), // Keeps layout balanced
+                          child: child,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

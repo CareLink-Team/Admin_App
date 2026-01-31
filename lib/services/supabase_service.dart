@@ -16,13 +16,14 @@ class SupabaseService {
   }
 
   Future<String?> getUserRole(String userId) async {
-    final response = await client
-        .from('profiles')
+    final res = await client
+        .from('user_profiles')
         .select('role')
-        .eq('id', userId)
-        .single();
+        .eq('user_id', userId)
+        .maybeSingle(); // 🔑 IMPORTANT
 
-    return response['role'] as String?;
+    if (res == null) return null;
+    return res['role'] as String;
   }
 
   User? get currentUser => client.auth.currentUser;

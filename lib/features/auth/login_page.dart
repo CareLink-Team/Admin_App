@@ -16,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  bool _obscurePassword = true;
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -23,12 +25,24 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  Future<void> _submit(LoginController controller) async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final success = await controller.login(
+      _emailController.text.trim(),
+      _passwordController.text,
+    );
+
+    if (success && mounted) {
+      Navigator.pushReplacementNamed(context, Routes.dashboard);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return AuthLayout(
-      // Pointing to your existing asset path
       logo: Image.asset('lib/assets/logos/carelink_logo.png', height: 100),
       title: 'CareLink',
       form: Form(
@@ -37,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Sign in to your account",
+              'Sign in to your account',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: Colors.grey[600],
@@ -45,68 +59,41 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 32),
 
-            // Email Field
+            // Email
             TextFormField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Email Address', // Changed from labelText to hintText
-                prefixIcon: const Icon(Icons.email_outlined, size: 22),
-                filled: true,
-                fillColor: theme.colorScheme.primary.withOpacity(0.05),
-                // This padding ensures the cursor and text are perfectly centered
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 20,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(
-                    color: theme.colorScheme.primary.withOpacity(0.2),
-                    width: 1,
-                  ),
-                ),
+              decoration: _inputDecoration(
+                theme,
+                hint: 'Email Address',
+                icon: Icons.email_outlined,
               ),
               validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
             ),
 
             const SizedBox(height: 20),
 
-            // Password Field
+            // Password
             TextFormField(
               controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Password', // Changed from labelText to hintText
-                prefixIcon: const Icon(Icons.lock_person_outlined, size: 22),
-                filled: true,
-                fillColor: theme.colorScheme.primary.withOpacity(0.05),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 20,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(
-                    color: theme.colorScheme.primary.withOpacity(0.2),
-                    width: 1,
+              obscureText: _obscurePassword,
+              decoration: _inputDecoration(
+                theme,
+                hint: 'Password',
+                icon: Icons.lock_person_outlined,
+                suffix: IconButton(
+                  icon: Icon(
+                    _obscurePassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    size: 20,
+                    color: theme.colorScheme.primary.withOpacity(0.6),
                   ),
+                  onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
                 ),
               ),
               validator: (v) =>
@@ -133,19 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: controller.isLoading
                           ? null
-                          : () async {
-                              if (!_formKey.currentState!.validate()) return;
-                              final success = await controller.login(
-                                email: _emailController.text.trim(),
-                                password: _passwordController.text,
-                              );
-                              if (success && context.mounted) {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  Routes.dashboard,
-                                );
-                              }
-                            },
+                          : () => _submit(controller),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         backgroundColor: const Color(0xFF2C4B99),
@@ -182,15 +157,50 @@ class _LoginPageState extends State<LoginPage> {
       footer: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("Issues logging in?"),
+          const Text('Issues logging in?'),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              // TODO: wire support action
+            },
             child: const Text(
               'Contact Tech Support',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  InputDecoration _inputDecoration(
+    ThemeData theme, {
+    required String hint,
+    required IconData icon,
+    Widget? suffix,
+  }) {
+    return InputDecoration(
+      hintText: hint,
+      prefixIcon: Icon(icon, size: 22),
+      suffixIcon: suffix != null
+          ? Padding(padding: const EdgeInsets.only(right: 8), child: suffix)
+          : null,
+      filled: true,
+      fillColor: theme.colorScheme.primary.withOpacity(0.05),
+      contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(
+          color: theme.colorScheme.primary.withOpacity(0.2),
+          width: 1,
+        ),
       ),
     );
   }

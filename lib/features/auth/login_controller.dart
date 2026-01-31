@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:admin_app/services/supabase_service.dart';
+import 'package:admin_app/services/auth_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginController extends ChangeNotifier {
-  final SupabaseService _supabase = SupabaseService();
+  final AuthService _authService;
+
+  LoginController(this._authService);
 
   bool _isLoading = false;
   String? _error;
@@ -11,37 +13,17 @@ class LoginController extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<bool> login({required String email, required String password}) async {
+  Future<bool> login(String email, String password) async {
     _setLoading(true);
     _error = null;
 
     try {
-      final response = await _supabase.signInWithEmailPassword(
-        email: email,
-        password: password,
-      );
-
-      final user = response.user;
-
-      if (user == null) {
-        _error = 'Invalid email or password';
-        return false;
-      }
-
-      // 🔐 ROLE CHECK
-      final role = await _supabase.getUserRole(user.id);
-
-      if (role != 'admin') {
-        await _supabase.signOut();
-        _error = 'Access denied. Admins only.';
-        return false;
-      }
-
+      await _authService.signInAdmin(email: email, password: password);
       return true;
     } on AuthException catch (e) {
       _error = e.message;
       return false;
-    } catch (e) {
+    } catch (_) {
       _error = 'Something went wrong. Try again.';
       return false;
     } finally {

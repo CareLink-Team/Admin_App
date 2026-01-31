@@ -3,7 +3,10 @@ import 'package:admin_app/features/auth/login_controller.dart';
 import 'package:admin_app/features/caretakers/caretakers_list.dart';
 import 'package:admin_app/features/dashboard/dashboard_page.dart';
 import 'package:admin_app/features/doctors/doctors_list.dart';
+import 'package:admin_app/features/medicines/medicines_list.dart';
 import 'package:admin_app/features/patients/patients_list.dart';
+import 'package:admin_app/services/auth_service.dart';
+import 'package:admin_app/services/supabase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_app/core/routing/routes.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +19,8 @@ class AppRouter {
       case Routes.login:
         return MaterialPageRoute(
           builder: (_) => ChangeNotifierProvider(
-            create: (_) => LoginController(),
-            child: LoginPage(),
+            create: (_) => LoginController(AuthService(SupabaseService())),
+            child: const LoginPage(),
           ),
         );
 
@@ -32,6 +35,9 @@ class AppRouter {
 
       case Routes.caretakers:
         return _adminRoute(const CaretakersList(), title: 'Caretakers');
+
+      case Routes.medicines:
+        return _adminRoute(const MedicinesList(), title: 'Medicines');
 
       default:
         return MaterialPageRoute(

@@ -1,117 +1,142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <base href="$FLUTTER_BASE_HREF">
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="CareLink Hospital Admin Panel">
+  <head>
+    <base href="$FLUTTER_BASE_HREF" />
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="CareLink Hospital Admin Panel" />
 
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="CareLink Admin">
-  
-  <title>CareLink Admin</title>
-  <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="CareLink Admin" />
 
-  <style>
-    body { background-color: #ffffff; margin: 0; }
+    <title>CareLink Admin</title>
+    <link rel="manifest" href="manifest.json" />
 
-    #loading-indicator {
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
+    <style>
+      body {
+        background-color: #ffffff;
+        margin: 0;
+      }
 
-    .loader-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeIn 0.8s ease-out;
-    }
+      #loading-indicator {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
 
-    .splash-logo {
-      width: 160px;
-      margin-bottom: 15px;
-    }
+      .loader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeIn 0.8s ease-out;
+      }
 
-    .main-title {
-      color: #2c4b99;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: 4px;
-      margin: 0;
-    }
+      .splash-logo {
+        width: 160px;
+        margin-bottom: 15px;
+      }
 
-    .sub-title {
-      color: #e24065;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 6px;
-      margin-top: 5px;
-      margin-bottom: 30px;
-      text-transform: uppercase;
-    }
+      .main-title {
+        color: #2c4b99;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: 4px;
+        margin: 0;
+      }
 
-    /* Bouncing Dots Animation */
-    .dots-container {
-      display: flex;
-      gap: 8px;
-    }
+      .sub-title {
+        color: #e24065;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 6px;
+        margin-top: 5px;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+      }
 
-    .dot {
-      width: 12px;
-      height: 12px;
-      background-color: #2c4b99;
-      border-radius: 50%;
-      animation: bounce 1.4s infinite ease-in-out both;
-    }
+      /* Bouncing Dots Animation */
+      .dots-container {
+        display: flex;
+        gap: 8px;
+      }
 
-    .dot:nth-child(1) { animation-delay: -0.32s; }
-    .dot:nth-child(2) { animation-delay: -0.16s; }
+      .dot {
+        width: 12px;
+        height: 12px;
+        background-color: #2c4b99;
+        border-radius: 50%;
+        animation: bounce 1.4s infinite ease-in-out both;
+      }
 
-    @keyframes bounce {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1.0); }
-    }
+      .dot:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+      .dot:nth-child(2) {
+        animation-delay: -0.16s;
+      }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-<body>
-  <div id="loading-indicator">
-    <div class="loader-content">
-      <img src="assets/logos/carelink_logo.png" alt="CareLink" class="splash-logo" />
-      
-      <h1 class="main-title">CARELINK</h1>
-      <span class="sub-title">Admin Panel</span>
+      @keyframes bounce {
+        0%,
+        80%,
+        100% {
+          transform: scale(0);
+        }
+        40% {
+          transform: scale(1);
+        }
+      }
 
-      <div class="dots-container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-indicator">
+      <div class="loader-content">
+        <img
+          src="assets/logos/carelink_logo.png"
+          alt="CareLink"
+          class="splash-logo"
+        />
+
+        <h1 class="main-title">CARELINK</h1>
+        <span class="sub-title">Admin Panel</span>
+
+        <div class="dots-container">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
       </div>
     </div>
-  </div>
+    <script src="flutter_bootstrap.js" async></script>
 
-  <script src="flutter_bootstrap.js" async></script>
-</body>
+    <script>
+      // This listener waits for the Flutter engine to be ready
+      window.addEventListener("flutter-first-frame", function () {
+        const loader = document.getElementById("loading-indicator");
+        if (loader) {
+          loader.style.transition = "opacity 0.4s ease"; // Smooth fade out
+          loader.style.opacity = "0";
+          loader.style.pointerEvents = "none";
+          setTimeout(() => loader.remove(), 400);
+        }
+      });
+    </script>
+  </body>
 </html>
-<script>
-  window.addEventListener('flutter-first-frame', function () {
-    const loader = document.getElementById('loading-indicator');
-    if (loader) {
-      loader.style.opacity = '0';
-      loader.style.pointerEvents = 'none';
-      setTimeout(() => loader.remove(), 300);
-    }
-  });
-</script>
