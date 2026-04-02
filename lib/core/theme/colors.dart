@@ -16,4 +16,15 @@ abstract final class AppColors {
   static const Color success = Color(0xFF16A34A);
   static const Color warning = Color(0xFFF59E0B);
   static const Color error = Color(0xFFDC2626);
+
+  // Sidebar & Navigation
+  static const Color navActiveBackground = Color(0xFF2C4B99);
+  static const Color navActiveForeground = Color(0xFF2C4B99);
+  static const Color navInactiveForeground = Color(0xFF64748B);
+
+  // Status & Alerts
+  static const Color alertRed = Color(0xFFE24065);
+
+  // Component-specific
+  static const Color searchBarBackground = Color(0xFFE2E8F0);
 }

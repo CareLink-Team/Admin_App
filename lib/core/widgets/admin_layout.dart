@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin_app/core/theme/app_theme.dart';
 import 'sidebar.dart';
 import 'topbar.dart';
 
@@ -19,9 +20,7 @@ class AdminLayout extends StatelessWidget {
           // Main Content Area
           Expanded(
             child: Container(
-              color: const Color(
-                0xFFF8FAFC,
-              ), // Subtle off-white background to make cards pop
+              color: AppColors.background,
               child: Column(
                 children: [
                   TopBar(title: title),

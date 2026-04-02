@@ -120,4 +120,73 @@ class DoctorService {
       throw Exception('Failed to fetch doctors by department: $e');
     }
   }
+
+  // CREATE - Add new doctor
+  Future<Doctor> createDoctor(Doctor doctor) async {
+    try {
+      final response = await _supabase.client
+          .from('doctors')
+          .insert(doctor.toJson())
+          .select()
+          .single();
+
+      return Doctor.fromJson(response);
+    } catch (e) {
+      throw Exception('Failed to create doctor: $e');
+    }
+  }
+
+  // UPDATE - Edit existing doctor
+  Future<Doctor> updateDoctor(String doctorId, Doctor doctor) async {
+    try {
+      final response = await _supabase.client
+          .from('doctors')
+          .update(doctor.toJson())
+          .eq('doctor_id', doctorId)
+          .select()
+          .single();
+
+      return Doctor.fromJson(response);
+    } catch (e) {
+      throw Exception('Failed to update doctor: $e');
+    }
+  }
+
+  // DELETE - Remove doctor
+  Future<void> deleteDoctor(String doctorId) async {
+    try {
+      await _supabase.client.from('doctors').delete().eq('doctor_id', doctorId);
+    } catch (e) {
+      throw Exception('Failed to delete doctor: $e');
+    }
+  }
+
+  // SEARCH - Filter doctors by department or name
+  Future<List<Doctor>> searchDoctors(String query) async {
+    try {
+      final res = await _supabase.client
+          .from('doctors')
+          .select()
+          .ilike('designation', '%$query%')
+          .or('department.ilike.%$query%');
+
+      return (res as List).map((e) => Doctor.fromJson(e)).toList();
+    } catch (e) {
+      throw Exception('Failed to search doctors: $e');
+    }
+  }
+
+  // FILTER - Get doctors by department
+  Future<List<Doctor>> getDoctorsByDepartment(String department) async {
+    try {
+      final res = await _supabase.client
+          .from('doctors')
+          .select()
+          .eq('department', department);
+
+      return (res as List).map((e) => Doctor.fromJson(e)).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch doctors: $e');
+    }
+  }
 }

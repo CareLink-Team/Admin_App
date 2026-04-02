@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:admin_app/core/theme/text_styles.dart';
+import 'package:admin_app/core/theme/app_theme.dart';
 
 class TopBar extends StatelessWidget {
   final String title;
@@ -58,7 +58,7 @@ class TopBar extends StatelessWidget {
             onPressed: () {},
             icon: Badge(
               label: const Text('3'),
-              backgroundColor: const Color(0xFFE24065),
+              backgroundColor: AppColors.alertRed,
               child: Icon(
                 Icons.notifications_none_rounded,
                 color: theme.colorScheme.onSurface.withOpacity(0.6),
@@ -80,19 +80,18 @@ class TopBar extends StatelessWidget {
                   ),
                   Text(
                     'CareLink HQ',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 11,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(width: 12),
               CircleAvatar(
                 radius: 18,
-                backgroundColor: const Color(0xFF2C4B99).withOpacity(0.1),
-                child: const Icon(
-                  Icons.person,
-                  size: 20,
-                  color: Color(0xFF2C4B99),
-                ),
+                backgroundColor: AppColors.primary.withOpacity(0.1),
+                child: Icon(Icons.person, size: 20, color: AppColors.primary),
               ),
             ],
           ),

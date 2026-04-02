@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:admin_app/core/theme/text_styles.dart';
+import 'package:admin_app/core/theme/app_theme.dart';
 import 'package:admin_app/core/routing/routes.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
 
-  static final List<_SidebarItemData> _items = [
-    _SidebarItemData(
+  static final List<SidebarItemData> _items = [
+    SidebarItemData(
       icon: Icons.dashboard_rounded,
       label: 'Dashboard',
       route: Routes.dashboard,
     ),
-    _SidebarItemData(
+    SidebarItemData(
       icon: Icons.local_hospital_rounded,
       label: 'Doctors',
       route: Routes.doctors,
     ),
-    _SidebarItemData(
+    SidebarItemData(
       icon: Icons.people_alt_rounded,
       label: 'Patients',
       route: Routes.patients,
     ),
-    _SidebarItemData(
+    SidebarItemData(
       icon: Icons.person_search_rounded,
       label: 'Caretakers',
       route: Routes.caretakers,
     ),
-    _SidebarItemData(
+    SidebarItemData(
       icon: Icons.medication_liquid_rounded,
       label: 'Medicines',
       route: Routes.medicines,
@@ -124,7 +124,7 @@ class Sidebar extends StatelessWidget {
 }
 
 class _SidebarItem extends StatelessWidget {
-  final _SidebarItemData item;
+  final SidebarItemData item;
   final bool isSelected;
 
   const _SidebarItem({required this.item, required this.isSelected});
@@ -175,12 +175,12 @@ class _SidebarItem extends StatelessWidget {
   }
 }
 
-class _SidebarItemData {
+class SidebarItemData {
   final IconData icon;
   final String label;
   final String route;
 
-  const _SidebarItemData({
+  const SidebarItemData({
     required this.icon,
     required this.label,
     required this.route,
