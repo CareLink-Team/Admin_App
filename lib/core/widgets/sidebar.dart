@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:admin_app/core/theme/colors.dart';
 import 'package:admin_app/core/theme/text_styles.dart';
 import 'package:admin_app/core/routing/routes.dart';
 

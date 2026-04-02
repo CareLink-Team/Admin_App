@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:admin_app/core/theme/text_styles.dart';
-import 'package:admin_app/core/theme/colors.dart';
 
 class TopBar extends StatelessWidget {
   final String title;
