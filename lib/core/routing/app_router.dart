@@ -25,19 +25,39 @@ class AppRouter {
         );
 
       case Routes.dashboard:
-        return _adminRoute(const DashboardPage(), title: 'Dashboard');
+        return _adminRoute(
+          const DashboardPage(),
+          title: 'Dashboard',
+          settings: settings,
+        );
 
       case Routes.doctors:
-        return _adminRoute(const DoctorsList(), title: 'Doctors');
+        return _adminRoute(
+          const DoctorsList(),
+          title: 'Doctors',
+          settings: settings,
+        );
 
       case Routes.patients:
-        return _adminRoute(const PatientsList(), title: 'Patients');
+        return _adminRoute(
+          const PatientsList(),
+          title: 'Patients',
+          settings: settings,
+        );
 
       case Routes.caretakers:
-        return _adminRoute(const CaretakersList(), title: 'Caretakers');
+        return _adminRoute(
+          const CaretakersList(),
+          title: 'Caretakers',
+          settings: settings,
+        );
 
       case Routes.medicines:
-        return _adminRoute(const MedicinesList(), title: 'Medicines');
+        return _adminRoute(
+          const MedicinesList(),
+          title: 'Medicines',
+          settings: settings,
+        );
 
       default:
         return MaterialPageRoute(
@@ -47,8 +67,13 @@ class AppRouter {
     }
   }
 
-  static Route _adminRoute(Widget child, {required String title}) {
+  static Route _adminRoute(
+    Widget child, {
+    required String title,
+    required RouteSettings settings,
+  }) {
     return MaterialPageRoute(
+      settings: settings,
       builder: (_) => AdminLayout(title: title, child: child),
     );
   }

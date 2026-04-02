@@ -30,8 +30,8 @@ class Sidebar extends StatelessWidget {
     _SidebarItemData(
       icon: Icons.medication_liquid_rounded,
       label: 'Medicines',
-      route: '/medicines',
-    ), // Example for your medicines
+      route: Routes.medicines,
+    ),
   ];
 
   @override
@@ -141,9 +141,7 @@ class _SidebarItem extends StatelessWidget {
         color: isSelected ? activeColor.withOpacity(0.08) : Colors.transparent,
       ),
       child: ListTile(
-        onTap: isSelected
-            ? null
-            : () => Navigator.pushReplacementNamed(context, item.route),
+        onTap: () => Navigator.pushReplacementNamed(context, item.route),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         leading: Icon(
           item.icon,
