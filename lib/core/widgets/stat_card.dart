@@ -5,6 +5,7 @@ class StatCard extends StatelessWidget {
   final String value;
   final IconData icon;
   final Color color;
+  final String? route;
 
   const StatCard({
     super.key,
@@ -12,11 +13,12 @@ class StatCard extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.color,
+    this.route,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    final card = Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -53,6 +55,19 @@ class StatCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+
+    if (route == null) return card;
+
+    return Semantics(
+      label: title,
+      hint: 'Tap to navigate',
+      button: true,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => Navigator.pushReplacementNamed(context, route!),
+        child: card,
       ),
     );
   }

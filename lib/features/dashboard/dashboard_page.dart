@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin_app/core/routing/routes.dart';
 import 'package:admin_app/core/widgets/stat_card.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -30,24 +31,28 @@ class DashboardPage extends StatelessWidget {
               value: "48",
               icon: Icons.person_add_alt_1_outlined,
               color: Color(0xFF2C4B99),
+              route: Routes.doctors,
             ),
             StatCard(
               title: "Total Patients",
               value: "1,240",
               icon: Icons.wheelchair_pickup_outlined,
               color: Color(0xFFE24065),
+              route: Routes.patients,
             ),
             StatCard(
               title: "Unassigned",
               value: "12",
               icon: Icons.assignment_late_outlined,
               color: Colors.orange,
+              route: Routes.caretakers,
             ),
             StatCard(
               title: "Medicine Stock",
               value: "850",
               icon: Icons.medical_services_outlined,
               color: Colors.teal,
+              route: Routes.medicines,
             ),
           ],
         ),
